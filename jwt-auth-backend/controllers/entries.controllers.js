@@ -47,6 +47,26 @@ async function myEntries(req, res) {
   }
 }
 
+async function getOneEntry (req,res) {
+    try{
+        const {id} = req.params
+        const entry = await Entry.findById()
+
+        if (!entry) {
+      return res.status(404).json({
+        message: "Entry not found",
+      })
+    }
+
+    return res.status(200).json(entry)
+    } catch(err){
+        console.error(err)
+        return res.status(500).json({
+            message:"Internal Server Error"
+        })
+    }
+}
+
 async function updateEntry(req, res) {
   try {
     const { id } = req.params;
@@ -54,8 +74,8 @@ async function updateEntry(req, res) {
     const owner = req.user._id;
 
     const entry = await Entry.findByIdAndUpdate(
-      id,
-      { title, entrybody, isPublic, owner },
+      { _id: id, owner },
+      { title, entrybody, isPublic },
       { new: true }
     );
 
@@ -96,6 +116,7 @@ module.exports = {
     createEntry,
     publicEntries,
     myEntries,
+    getOneEntry,
     updateEntry,
     deleteEntry
 

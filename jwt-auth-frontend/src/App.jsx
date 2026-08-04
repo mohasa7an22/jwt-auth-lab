@@ -13,6 +13,7 @@ import NewEntry from "./pages/NewEntry";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import "./App.css";
+import EditEntry from "./pages/EditEntry";
 function App() {
       const something = useAuth()
       console.log(something)
@@ -27,6 +28,7 @@ function App() {
         <Route path="/my-entries" element={<ProtectedRoute><MyEntries /></ProtectedRoute>} />
         <Route path="/entries" element={<Entries />} /> 
         <Route path='new-entry' element={<ProtectedRoute><NewEntry /></ProtectedRoute>} />
+        <Route path='/entries/:id' element={<ProtectedRoute><EditEntry/></ProtectedRoute>} />
       </Routes>
     </div>
   );
