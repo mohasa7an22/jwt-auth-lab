@@ -23,22 +23,44 @@
         fetchMyEntries()
     }, [])
 
+      async function handleDelete(id) {
+    try{
+        await axios.delete(`${import.meta.env.VITE_BACK_END_SERVER_URL}/entries/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      })
+        setEntries(entries.filter(entry => entry._id !== id))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
     return (
         <div>
         <h1>My Entries</h1>
         {entries.length === 0 ? (
-            <p>No entries yet</p>
-        ) : (
-            <ul>
-                {entries.map(oneEntry => (
-                    <li key={oneEntry._id}>
-                        <h2>{oneEntry.title}</h2>
-                        <p>{oneEntry.entrybody}</p>
-                    </li>
-                ))}
-            </ul>
-        )}
-        </div>
+        <p>No public entries yet</p>
+      ) : (
+        <ul>
+          {entries.map(entry => {
+            const isOwner = user && entry.owner && entry.owner._id === user._id
+            return (
+              <li key={entry._id}>
+                <h2>{entry.title}</h2>
+                <h3> By: {entry.owner.username}</h3>
+                <p>{entry.entrybody}</p>
+                {isOwner && (
+                  <>
+                    <button onClick={() => handleDelete(entry._id)}>Delete</button>
+                  </>
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      )}
+    </div>
     )
     }
 

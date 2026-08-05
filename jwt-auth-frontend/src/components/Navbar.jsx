@@ -13,6 +13,7 @@ function Navbar() {
       <Link to='/my-entries'>My Entries</Link>
       <Link to='/entries'>Public Entries</Link>
       <Link to='/new-entry'>New Entry</Link>
+      {user.role === 'admin' && <Link to='/admin'>Admin</Link>}
       </>) : 
       (<>
         <Link to='/entries'>Public Entries</Link>

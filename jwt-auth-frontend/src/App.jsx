@@ -14,6 +14,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { useAuth } from "./context/AuthContext";
 import "./App.css";
 import EditEntry from "./pages/EditEntry";
+import IsAdmin from "./components/IsAdmin"
+import AdminPage from "./pages/AdminPage"
 function App() {
       const something = useAuth()
       console.log(something)
@@ -29,6 +31,7 @@ function App() {
         <Route path="/entries" element={<Entries />} /> 
         <Route path='new-entry' element={<ProtectedRoute><NewEntry /></ProtectedRoute>} />
         <Route path='/entries/:id' element={<ProtectedRoute><EditEntry/></ProtectedRoute>} />
+        <Route path ='/admin' element={<ProtectedRoute><IsAdmin><AdminPage/></IsAdmin></ProtectedRoute>}/>
       </Routes>
     </div>
   );
